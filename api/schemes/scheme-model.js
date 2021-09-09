@@ -1,4 +1,11 @@
+const db = require('../../data/db-config')
+
 function find() { // EXERCISE A
+  return db('schemes as sc')
+  .leftJoin('steps as st', 'sc.scheme.id','st.scheme_id')
+  .select('sc.*')
+  .count('st.step_id as number_of_steps')
+  .groupBy('sc.scheme_id')
   /*
     1A- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`.
     What happens if we change from a LEFT join to an INNER join?
@@ -18,6 +25,11 @@ function find() { // EXERCISE A
 }
 
 function findById(scheme_id) { // EXERCISE B
+  return db('schemes as sc')
+  .leftJoin('steps as st', 'sc.scheme.id','st.scheme_id')
+  .where('sc.scheme_id',scheme_id)
+  .select('sc.*','sc.scheme_name')
+  .orderBy('st.step_number')
   /*
     1B- Study the SQL query below running it in SQLite Studio against `data/schemes.db3`:
 
@@ -86,6 +98,11 @@ function findById(scheme_id) { // EXERCISE B
 }
 
 function findSteps(scheme_id) { // EXERCISE C
+  return db('schemes as sc')
+  .leftJoin('steps as st', 'sc.scheme.id','st.scheme_id')
+  .where('sc.scheme_id',scheme_id)
+  .select('sc.*','sc.name')
+  .orderBy('st.step_number')
   /*
     1C- Build a query in Knex that returns the following data.
     The steps should be sorted by step_number, and the array
