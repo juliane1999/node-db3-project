@@ -1,6 +1,6 @@
 /*
   If `scheme_id` does not exist in the database:
-
+//start
   status 404
   {
     "message": "scheme with scheme_id <actual id> not found"
